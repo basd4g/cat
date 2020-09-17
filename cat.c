@@ -37,8 +37,8 @@ void output_file(char *path) {
 
 int main(int argc, char* argv[]) {
   if (argc < 2) {
-    fprintf(stderr, "Usage:  %s <filename>", argv[0]);
-    die("");
+    output_file("/dev/stdin");
+    exit(0);
   }
   for (int file_num = 1; file_num < argc; file_num++) {
     output_file(argv[file_num]);
