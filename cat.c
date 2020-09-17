@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-//#include <sys/stat.h>
 #include <fcntl.h>
 
 #define BUFFER_SIZE 2048
@@ -10,7 +9,6 @@ void die(char *path) {
   perror(path);
   exit(1);
 }
-
 
 void output_file(char *path) {
   int fd;
@@ -46,4 +44,3 @@ int main(int argc, char* argv[]) {
     output_file(argv[file_num]);
   }
 }
-
