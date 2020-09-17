@@ -2,11 +2,11 @@ CFLAGS=-std=c11
 SRCS=cat.c
 OBJS=$(SRCS:.c=.o)
 
-willani: $(OBJS)
+cat: $(OBJS)
 	$(CC) -o cat $(OBJS) $(LDFLAGS)
 
-test: willani
-	@echo 'No test cases'
+test: cat
+	diff cat.c < ./cat cat.c
 
 clean:
 	rm -rf *.o cat
