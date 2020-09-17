@@ -10,15 +10,9 @@ void die(char *path) {
   exit(1);
 }
 
-void output_file(char *path) {
-  int fd;
+void output_fd(int fd, char *path) {
   char buf[BUFFER_SIZE];
   int charlen;
-
-  fd = open (path, O_RDONLY);
-  if (fd < 0) {
-    die(path);
-  }
 
   for (;;) {
     charlen = read(fd, buf, sizeof buf);
@@ -30,6 +24,17 @@ void output_file(char *path) {
     if (write(STDOUT_FILENO, buf, charlen) < 0)
       die(path);
   }
+}
+
+void output_file(char *path) {
+  int fd;
+
+  fd = open (path, O_RDONLY);
+  if (fd < 0) {
+    die(path);
+  }
+
+  output_fd(fd, path);
 
   if (close(fd) < 0)
     die(path);
@@ -37,9 +42,10 @@ void output_file(char *path) {
 
 int main(int argc, char* argv[]) {
   if (argc < 2) {
-    output_file("/dev/stdin");
-    exit(0);
+    output_fd(STDIN_FILENO, "/dev/stdin");
+    return 0;
   }
+
   for (int file_num = 1; file_num < argc; file_num++) {
     output_file(argv[file_num]);
   }
