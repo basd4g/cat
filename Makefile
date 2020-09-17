@@ -6,7 +6,8 @@ cat: $(OBJS)
 	$(CC) -o cat $(OBJS) $(LDFLAGS)
 
 test: cat
-	diff cat.c < ./cat cat.c
+	./cat cat.c | (cat cat.c | diff /dev/fd/3 - ) 3<&0
+	./cat cat.c Makefile | (cat cat.c Makefile | diff /dev/fd/3 - ) 3<&0
 
 clean:
 	rm -rf *.o cat
